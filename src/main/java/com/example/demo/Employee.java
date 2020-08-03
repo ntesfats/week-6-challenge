@@ -8,8 +8,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="user_table")
-public class User {
+@Table(name="employee_table")
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -26,31 +26,35 @@ public class User {
     @Column (name = "password")
     private String password;
 
-    @Column (name = "first_name")
-    @NotEmpty
-    @NotNull
-    private String firstName;
-
-    @Column (name = "last_name")
-    @NotEmpty
-    @NotNull
-    private String lastName;
-
     @Column (name = "enabled")
     private boolean enabled;
 
-    public User() {
+    @Column (name = "full_name")
+    @NotEmpty
+    @NotNull
+    private String fullName;
+
+    @Column(name = "job_title")
+    @NotEmpty
+    @NotNull
+    private String jobTitle;
+    @JoinTable(name = "depart_id")
+    private Department department;
+
+    public Employee() {
     }
-    public User(@Size(min=3) String username,
-                @NotEmpty @NotNull String email,
-                @NotEmpty @NotNull String password,
-                @NotEmpty @NotNull String firstName,
-                @NotEmpty @NotNull String lastName, boolean enabled) {
+    public Employee(@Size(min=3) String username,
+                    @NotEmpty @NotNull String email,
+                    @NotEmpty @NotNull String password,
+                    @NotEmpty @NotNull String fullName,
+                    @NotEmpty @NotNull String jobTitle,
+                    @NotEmpty @NotNull Department department, boolean enabled) {
         this.username = username;
         this.email = email;
         this.setPassword(password);
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.fullName = fullName;
+        this.jobTitle = jobTitle;
+        this.department = department;
         this.enabled = enabled;
     }
 
@@ -84,20 +88,37 @@ public class User {
         this.password = "";
     }
 
-    public String getFirstName() {
-        return firstName;
+
+    public long getId() {
+        return id;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public boolean isEnabled() {

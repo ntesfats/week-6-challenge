@@ -17,29 +17,29 @@ public class HomeController {
     RoleRepository roleRepository;
 
     @Autowired
-    UserRepository userRepository;
+    EmployeeRepository employeeRepository;
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new Employee());
         return "register";
     }
 
     @PostMapping("/processregister")
-    public String processRegister(@Valid @ModelAttribute("user") User user,
+    public String processRegister(@Valid @ModelAttribute("user") Employee employee,
                                   BindingResult result, Model model) {
         if (result.hasErrors()) {
-            user.clearPassword();
-            model.addAttribute("user", user);
+            employee.clearPassword();
+            model.addAttribute("user", employee);
             return "register";
         }
-        model.addAttribute("user", user);
+        model.addAttribute("user", employee);
         model.addAttribute("message", "New user account created");
 
-        user.setEnabled(true);
-        userRepository.save(user);
+        employee.setEnabled(true);
+        employeeRepository.save(employee);
 
-        Role role = new Role(user.getUsername(), "ROLE_USER");
+        Role role = new Role(employee.getUsername(), "ROLE_USER");
         roleRepository.save(role);
 
         return "redirect:/";
