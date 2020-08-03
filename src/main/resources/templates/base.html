@@ -34,15 +34,16 @@
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/about}">About</a>
+                <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+                    <a class="nav-link" th:href="@{/department/add}">Add New Department</a>
                 </li>
                 <li class="nav-item">
-                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/dave}">Admin</a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/employee/add}">Add New Employee</a>
                 </li>
                 <li class="nav-item">
-                    <a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/dave/addRoomListing}">Add New Room Listing</a>
+                    <a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/profile}">Profile</a>
                 </li>
+
                 <li class="nav-item">
                     <a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/logout}">logout</a>
 

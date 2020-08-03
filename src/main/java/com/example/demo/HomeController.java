@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Set;
@@ -23,15 +20,61 @@ public class HomeController {
     @Autowired
     DepartmentRepository departmentRepository;
 
-    @GetMapping("/all-department")
+//    Department
+    @GetMapping("/department/all")
     public String allDepartments(Model model) {
         long numberOfDepartment = departmentRepository.count();
 
         model.addAttribute("numberOfDepartment", numberOfDepartment);
         model.addAttribute("departments", departmentRepository.findAll());
         return "allDepartment";
-
     }
+    @GetMapping("/department/add")
+    public String addDepartment(Model model){
+        model.addAttribute("submit", "Add New Department");
+        model.addAttribute("department", new Department());
+
+        return "addDepartment";
+    }
+    @PostMapping("/department/process")
+    public String processDepartment(@Valid @ModelAttribute("department") Department department,
+                                    BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("submit", "Add New Department");
+            return "addDepartment";
+        }
+        departmentRepository.save(department);
+        return "redirect:/department/all";
+    }
+    @RequestMapping("/department/details/{id}")
+    public String departmentDetails(@PathVariable Long id, Model model){
+        Department department =  departmentRepository.findById(id).get();
+        if (department == null) {
+            model.addAttribute("error", "Department does not exist");
+        } else {
+            model.addAttribute("department", departmentRepository.findById(id).get());
+        }
+        return "departmentDetail";
+    }
+    @RequestMapping("/department/update/{id}")
+    public String updateDepartment(@PathVariable Long id, Model model){
+        Department department = departmentRepository.findById(id).get();
+
+        model.addAttribute("submit", "update");
+        model.addAttribute("department",department);
+        return "addDepartment";
+    }
+
+
+
+
+
+                        /employee/add
+                        /employee/details/{id}
+                        /employee/update/{id}
+                        /employee/deactivate/{id}
+
+                        /profile
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {

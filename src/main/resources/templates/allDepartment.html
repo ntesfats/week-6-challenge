@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org">
+<html lang="en" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <div th:replace="base :: metaTags"></div>
 
@@ -15,13 +16,51 @@
         <div class="col">
             <p>Departments: </p>
         </div>
+        <div class="col">
+            <a href="@{/department/add}">
+                <button>Add new Department!</button>
+            </a>
+            <button></button>
+        </div>
         <div class="col ">
             <p class="numberOfDepartment"> ([[${numberOfDepartment}]] department)</p>
         </div>
         <hr>
     </div>
     <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col"># Of Employee</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="department : ${departments}">
+                    <td>[[${department.name}]]</td>
+                    <td>[[${numberOfDepartment}]]</td>
 
+                    <td>
+<!--                        <a th:href="@{'/details?id=' + ${room.id}}">View</a>-->
+                        <a th:href="@{/details/{id} (id=${department.id})}">View</a>
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/department/update/{id} (id=${department.id})}">Update</a>
+
+
+
+<!--                        <a sec:authorize="isAuthenticated()" th:if="${!room.isRented}" th:href="@{/dave/rentControl/{id}?details=false (id=${room.id})}">Rent Out</a>-->
+<!--                        <a sec:authorize="isAuthenticated()" th:if="${room.isRented}" th:href="@{/dave/rentControl/{id}?details=false (id=${room.id})}">UnRent</a>-->
+                    </td>
+
+                    <!--                    <td style="background: red; color: white;" th:if="${room.isRented}">is Rented</td>-->
+                    <!--                    <td style="background: greenyellow; color: white;" th:if="${!room.isRented}">Not Rented</td>-->
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
     </div>
 
 
