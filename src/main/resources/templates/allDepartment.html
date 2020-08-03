@@ -44,17 +44,14 @@
 
                     <td>
 <!--                        <a th:href="@{'/details?id=' + ${room.id}}">View</a>-->
-                        <a th:href="@{/details/{id} (id=${department.id})}">View</a>
-                        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/department/update/{id} (id=${department.id})}">Update</a>
+                        <a th:href="@{department/details/{id} (id=${department.id})}">
+                            <button type="button" class="btn btn-info">View</button>
+                        </a>
+                        <a th:href="@{/department/update/{id} (id=${department.id})}">
+                            <button type="button" class="btn btn-warning">Update</button>
+                        </a>
 
-
-
-<!--                        <a sec:authorize="isAuthenticated()" th:if="${!room.isRented}" th:href="@{/dave/rentControl/{id}?details=false (id=${room.id})}">Rent Out</a>-->
-<!--                        <a sec:authorize="isAuthenticated()" th:if="${room.isRented}" th:href="@{/dave/rentControl/{id}?details=false (id=${room.id})}">UnRent</a>-->
                     </td>
-
-                    <!--                    <td style="background: red; color: white;" th:if="${room.isRented}">is Rented</td>-->
-                    <!--                    <td style="background: greenyellow; color: white;" th:if="${!room.isRented}">Not Rented</td>-->
 
                 </tr>
                 </tbody>

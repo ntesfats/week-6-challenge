@@ -34,9 +34,29 @@
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
                 </li>
-                <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
-                    <a class="nav-link" th:href="@{/department/add}">Add New Department</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Department
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" th:href="@{/department/add}">Add</a>
+                        <a sec:authorize="isAuthenticated()"class="dropdown-item" th:href="@{/department/all}">View All</a>
+                        <div class="dropdown-divider"></div>
+                    </div>
                 </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Employee
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-item" th:href="@{/employee/add}">Add</a>
+                        <a sec:authorize="isAuthenticated()"class="dropdown-item" th:href="@{/employee/all}">View All</a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </li>
+
                 <li class="nav-item">
                     <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" th:href="@{/employee/add}">Add New Employee</a>
                 </li>
@@ -47,27 +67,18 @@
                 <li class="nav-item">
                     <a sec:authorize="isAuthenticated()" class="nav-link" th:href="@{/logout}">logout</a>
 
-
-
-                    <!--                    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post">-->
-<!--                        <input type="submit" value="logout">-->
-<!--                    </form>-->
                 </li>
 
 
 
             </ul>
-<!--            <form class="form-inline my-2 my-lg-0">-->
-<!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-<!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-<!--            </form>-->
+
         </div>
     </nav>
 </div>
 
 <!--Main Part -->
 
-<h1>Base</h1>
 
 
 

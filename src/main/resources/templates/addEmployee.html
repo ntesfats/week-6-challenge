@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <div th:replace="base :: metaTags"></div>
+
+    <div th:replace="base :: BootStrapAndMainCSSLinks"></div>
+    <title>[[${submit}]] Employee</title>
+</head>
+<body>
+
+<div th:replace="base :: navbar"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>[[${submit}]] Employee: </h2>
+
+            <form th:action="@{/employee/process}" th:object="${employee}" method="post">
+                <p>Full Name: [[${employee.fullName}]] </p>
+                <p> Email: [[${employee.email}]] </p>
+                <p> UserName: [[${employee.userName}]] </p>
+                <p> PassWord: [[${employee.password}]] </p>
+                <p> Department: [[${employee.department.name}]] </p>
+                <p> Job Title: [[${employee.}]] </p>
+
+                <div class="form-group">
+                    <input type="hidden" th:field="*{id}">
+                    <label for="depName">Full Name</label>
+                    <input type="text" class="form-control" id="depName">
+                    <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span> <br>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input th:field="*{email}" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br>
+                </div>
+                <div class="form-group">
+                    <label for="UserName">UserName</label>
+                    <input th:field="*{userName}" type="text" class="form-control" id="UserName">
+                    <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></span> <br>
+
+                </div>
+                <div class="form-group">
+                    <label for="password">PassWord</label>
+                    <input th:field="*{password}" type="password" class="form-control" id="password">
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span> <br>
+                </div>
+                <div class="form-group">
+                    <label for="title">Job Title</label>
+                    <input th:field="*{jobTitle}" type="text" class="form-control" id="title">
+                    <span th:if="${#fields.hasErrors('jobTitle')}" th:errors="*{jobTitle}"></span> <br>
+                </div>
+                <div class="form-group">
+                    <label for="dep">Department</label>
+                    <select th:field="*{department.id}" class="form-control" id="dep">
+                        <option th:each="d : ${departments}"
+                                th:value="${d.id}"
+                                th:text="${d.name}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="enabled">Enabled</label>
+                    <input th:field="*{enabled}" type="text" class="form-control" id="enabled">
+                </div>
+
+                <button type="submit" class="btn btn-primary">[[${submit}]] Employee</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="base :: BootStrapScripts"></div>
+</body>
+</html>

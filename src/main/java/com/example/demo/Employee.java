@@ -123,7 +123,7 @@ public class Employee {
         this.department = department;
     }
 
-    public boolean isEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 

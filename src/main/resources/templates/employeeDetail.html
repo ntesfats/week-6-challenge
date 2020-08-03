@@ -22,8 +22,8 @@
                 <p> Email: [[${employee.email}]] </p>
                 <p> UserName: [[${employee.userName}]] </p>
                 <p> PassWord: [[${employee.password}]] </p>
-                <p> Department: [[${employee.department}]] </p>
-                <p> Job Title: [[${employee.}]] </p>
+                <p> Department: [[${employee.department.name}]] </p>
+                <p> Job Title: [[${employee.jobTile}]] </p>
 
 
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
@@ -33,11 +33,11 @@
 
                     <a th:if="${!employee.enabled}"
                        th:href="@{/employee/deactivate/{id}?details=true (id=${employee.id})}">
-                        <button type="button" class="btn btn-danger">Deactivate</button>
+                        <button type="button" class="btn btn-success">Activate</button>
                     </a>
                     <a th:if="${employee.enabled}"
                        th:href="@{/employee/deactivate/{id}?details=true (id=${employee.id})}">
-                        <button type="button" class="btn btn-success">Activate</button>
+                        <button type="button" class="btn btn-danger">Deactivate</button>
                     </a>
                 </div>
 

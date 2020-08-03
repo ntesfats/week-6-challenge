@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <div th:replace="base :: metaTags"></div>
+
+    <div th:replace="base :: BootStrapAndMainCSSLinks"></div>
+    <title>Add Task</title>
+</head>
+<body>
+
+<div th:replace="base :: navbar"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>All Employee under their department:</h2>
+
+            <ul th:each="department : ${departments}" class="list-group">
+                <li class="list-group-item active">
+                    <h1>[[${department.name}]]</h1>
+
+                </li>
+                <li class="list-group-item" th:each="employee : ${department.employees}">
+                    <div class="row">
+                        <div class="col">
+                            <span> Full Name: [[${employee.fullName}]] </span>
+                            <span> | Job Title: [[${employee.}]] </span>
+                        </div>
+
+                        <div class="col">
+                            <a th:href="@{'/employee/details?id=' + ${employee.id}}">
+                                <button type="button" class="btn btn-info">View</button>
+                            </a>
+                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/employee/update/{id} (id=${employee.id})}">
+                                <button type="button" class="btn btn-warning">Update</button>
+                            </a>
+                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:if="${!employee.enabled}"
+                               th:href="@{/employee/deactivate/{id}?details=false (id=${employee.id})}">
+                                <button type="button" class="btn btn-success">Activate</button>
+                            </a>
+                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:if="${employee.enabled}"
+                               th:href="@{/employee/deactivate/{id}?details=false (id=${employee.id})}">
+                                <button type="button" class="btn btn-danger">Deactivate</button>
+                            </a>
+                        </div>
+                    </div>
+
+                </li>
+
+            </ul>
+
+            <ul >
+
+                <hr>
+                <th:block >
+                    <li></li>
+                    <hr>
+                </th:block>
+
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="base :: BootStrapScripts"></div>
+</body>
+</html>

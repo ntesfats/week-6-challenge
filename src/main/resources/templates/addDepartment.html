@@ -13,16 +13,18 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h2>Adding new department:</h2>
+            <h2>[[${submit}]] Department: </h2>
 
             <form th:action="@{/department/process}" th:object="${department}" method="post">
+
                 <div class="form-group">
+                    <input type="hidden" th:field="*{id}">
                     <label for="depName">Department Name</label>
-                    <input type="text" class="form-control" id="depName">
+                    <input type="text" th;field="*{name}" class="form-control" id="depName">
                     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span> <br>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">[[${submit}]] Department</button>
             </form>
 
         </div>

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,7 @@ public class HomeController {
     }
     @GetMapping("/department/add")
     public String addDepartment(Model model){
-        model.addAttribute("submit", "Add New Department");
+        model.addAttribute("submit", "Add");
         model.addAttribute("department", new Department());
 
         return "addDepartment";
@@ -40,7 +41,7 @@ public class HomeController {
     public String processDepartment(@Valid @ModelAttribute("department") Department department,
                                     BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("submit", "Add New Department");
+            model.addAttribute("submit", "Submit");
             return "addDepartment";
         }
         departmentRepository.save(department);
@@ -60,38 +61,37 @@ public class HomeController {
     public String updateDepartment(@PathVariable Long id, Model model){
         Department department = departmentRepository.findById(id).get();
 
-        model.addAttribute("submit", "update");
+        model.addAttribute("submit", "Update");
         model.addAttribute("department",department);
         return "addDepartment";
     }
 
+//    Employee
 
+    @GetMapping("/employee/all")
+    public String allEmployee(Model model){
 
+        Iterable<Department> departments = departmentRepository.findAll();
+        model.addAttribute("departments", departments);
 
-
-                        /employee/add
-                        /employee/details/{id}
-                        /employee/update/{id}
-                        /employee/deactivate/{id}
-
-                        /profile
-
-    @GetMapping("/register")
-    public String showRegisterPage(Model model) {
-        model.addAttribute("user", new Employee());
-        return "register";
+        return "allEmployee";
+    }
+    @GetMapping("/employee/add")
+    public String addEmployee(Model model) {
+        model.addAttribute("employee", new Employee());
+        return "addEmployee";
     }
 
-    @PostMapping("/processregister")
-    public String processRegister(@Valid @ModelAttribute("user") Employee employee,
-                                  BindingResult result, Model model) {
-        if (result.hasErrors()) {
+    @PostMapping("/employee/process")
+    public String procesEmployee(@ModelAttribute Employee employee,
+                                 BindingResult result, Model model) {
+
+        if(result.hasErrors()){
             employee.clearPassword();
-            model.addAttribute("user", employee);
-            return "register";
+            model.addAttribute("submit", "Update");
+            model.addAttribute("employee", employee);
+            return "addEmployee";
         }
-        model.addAttribute("user", employee);
-        model.addAttribute("message", "New user account created");
 
         employee.setEnabled(true);
         employeeRepository.save(employee);
@@ -99,9 +99,51 @@ public class HomeController {
         Role role = new Role(employee.getUsername(), "ROLE_USER");
         roleRepository.save(role);
 
-        return "redirect:/";
+
+
+
+        return "redirect:/employee/all";
+    }
+    @GetMapping("/employee/details")
+    public String employeeDetails(@RequestParam("details") Long id, Model model) {
+        Employee employee = employeeRepository.findById(id).get();
+        model.addAttribute("employee", employee);
+
+        return "employeeDetail";
+    }
+    @GetMapping("/employee/update/{id}")
+    public String updateEmployee(@PathVariable Long id, Model model) {
+        Employee employee = employeeRepository.findById(id).get();
+        model.addAttribute("employee", employee);
+        model.addAttribute("submit", "Update");
+        return "addEmployee";
+    }
+    @GetMapping("/employee/deactivate/{id}")
+    public String deactivate(@PathVariable long id, Model model, @RequestParam("details") boolean returnToDetailPage){
+
+        Employee employee = employeeRepository.findById(id).get();
+//       Here: I am negating whatever the isRented property holds
+        employee.setEnabled(!employee.getEnabled());
+
+        employeeRepository.save(employee);
+        model.addAttribute("employee", employee);
+
+        if (returnToDetailPage) {
+            return "redirect:/employee/details?id="+id;
+        } else {
+            return "redirect:/";
+        }
 
     }
+    @GetMapping("/profile/{id}")
+    public String profile(@PathVariable Long id, Model model){
+        Employee employee = employeeRepository.findById(id).get();
+        model.addAttribute("employee", employee);
+        return "profile";
+    }
+
+
+
 
     @RequestMapping("/")
     public String index(){
@@ -117,10 +159,7 @@ public class HomeController {
         return "redirect:/login?logout=true";
     }
 
-    @RequestMapping("/some")
-    public String some(){
-        return"some";
-    }
+
 
     @RequestMapping("/admin")
     public String admin() {
