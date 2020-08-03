@@ -15,7 +15,7 @@ public class Employee {
     private long id;
 
     @Column (name = "username")
-    @Size(min= 3)
+    @Size(min=1)
     private String username;
 
     @Column(name = "email")
@@ -38,7 +38,9 @@ public class Employee {
     @NotEmpty
     @NotNull
     private String jobTitle;
-    @JoinTable(name = "depart_id")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "depart_id")
     private Department department;
 
     public Employee() {

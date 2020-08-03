@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 @Controller
 public class HomeController {
@@ -18,6 +19,19 @@ public class HomeController {
 
     @Autowired
     EmployeeRepository employeeRepository;
+
+    @Autowired
+    DepartmentRepository departmentRepository;
+
+    @GetMapping("/all-department")
+    public String allDepartments(Model model) {
+        long numberOfDepartment = departmentRepository.count();
+
+        model.addAttribute("numberOfDepartment", numberOfDepartment);
+        model.addAttribute("departments", departmentRepository.findAll());
+        return "allDepartment";
+
+    }
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -18,7 +19,7 @@ public class Department {
     private String departmentName;
 
     @OneToMany(mappedBy = "department",
-            cascade = CascadeType.ALL,
+            cascade=CascadeType.ALL,
             fetch = FetchType.EAGER)
     private Set<Employee> employees;
 
