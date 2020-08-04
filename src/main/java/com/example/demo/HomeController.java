@@ -146,15 +146,6 @@ public class HomeController {
         }
 
     }
-    @GetMapping("/profile/{id}")
-    public String profile(@PathVariable Long id, Model model){
-        Employee employee = employeeRepository.findById(id).get();
-        model.addAttribute("employee", employee);
-        return "profile";
-    }
-
-
-
 
     @RequestMapping("/")
     public String index(){
@@ -172,13 +163,4 @@ public class HomeController {
 
 
 
-    @RequestMapping("/admin")
-    public String admin() {
-        return "admin";
-    }
-
-    @RequestMapping("/user")
-    public String user() {
-        return "user";
-    }
 }
