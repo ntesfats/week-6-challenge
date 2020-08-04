@@ -28,6 +28,11 @@ public class HomeController {
 
         model.addAttribute("numberOfDepartment", numberOfDepartment);
         model.addAttribute("departments", departmentRepository.findAll());
+//        long r = 2;
+//        Department d = departmentRepository.findById(r).get();
+//        d.getEmployees().size();
+
+
         return "allDepartment";
     }
     @GetMapping("/department/add")
@@ -70,7 +75,6 @@ public class HomeController {
 
     @GetMapping("/employee/all")
     public String allEmployee(Model model){
-
         Iterable<Department> departments = departmentRepository.findAll();
         model.addAttribute("departments", departments);
 
@@ -78,7 +82,11 @@ public class HomeController {
     }
     @GetMapping("/employee/add")
     public String addEmployee(Model model) {
+        Iterable<Department> departments = departmentRepository.findAll();
+
         model.addAttribute("employee", new Employee());
+        model.addAttribute("submit", "Add");
+        model.addAttribute("departments", departments);
         return "addEmployee";
     }
 
@@ -104,8 +112,8 @@ public class HomeController {
 
         return "redirect:/employee/all";
     }
-    @GetMapping("/employee/details")
-    public String employeeDetails(@RequestParam("details") Long id, Model model) {
+    @RequestMapping("/employee/details")
+    public String employeeDetails(@RequestParam("id") long id, Model model) {
         Employee employee = employeeRepository.findById(id).get();
         model.addAttribute("employee", employee);
 
@@ -114,7 +122,10 @@ public class HomeController {
     @GetMapping("/employee/update/{id}")
     public String updateEmployee(@PathVariable Long id, Model model) {
         Employee employee = employeeRepository.findById(id).get();
+        Iterable<Department> departments = departmentRepository.findAll();
+
         model.addAttribute("employee", employee);
+        model.addAttribute("departments", departments);
         model.addAttribute("submit", "Update");
         return "addEmployee";
     }
@@ -131,7 +142,7 @@ public class HomeController {
         if (returnToDetailPage) {
             return "redirect:/employee/details?id="+id;
         } else {
-            return "redirect:/";
+            return "redirect:/employee/all";
         }
 
     }

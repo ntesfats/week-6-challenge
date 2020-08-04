@@ -5,7 +5,7 @@
     <div th:replace="base :: metaTags"></div>
 
     <div th:replace="base :: BootStrapAndMainCSSLinks"></div>
-    <title>Add Task</title>
+    <title>All Employee</title>
 </head>
 <body>
 
@@ -17,31 +17,39 @@
             <h2>All Employee under their department:</h2>
 
             <ul th:each="department : ${departments}" class="list-group">
-                <li class="list-group-item active">
-                    <h1>[[${department.name}]]</h1>
-
+                <li class="list-group-item d-flex justify-content-between align-items-center active">
+                    <a th:href="@{/department/details/{id} (id=${department.id})}"
+                       class="list-group-item list-group-item-action active">
+                        <Strong>[[${department.name}]]</Strong>
+                    </a>
+                    <span class="badge badge-primary badge-pill"> [[${department.employees.size()}]]</span>
                 </li>
                 <li class="list-group-item" th:each="employee : ${department.employees}">
                     <div class="row">
-                        <div class="col">
-                            <span> Full Name: [[${employee.fullName}]] </span>
-                            <span> | Job Title: [[${employee.}]] </span>
+                        <div class="col align-self-center">
+                            <span> [[${employee.fullName}]] | [[${employee.jobTitle}]] </span>
                         </div>
 
-                        <div class="col">
-                            <a th:href="@{'/employee/details?id=' + ${employee.id}}">
-                                <button type="button" class="btn btn-info">View</button>
+                        <div class="col float-right list-group list-group-horizontal list-group-flush">
+
+                            <a sec:authorize="isAuthenticated()" th:href="@{'/employee/details?id=' + ${employee.id}}"
+                                class="list-group-item list-group-item-action flex-fill vud-link">
+                                <button type="button" class="btn btn-info vud-btn">View</button>
                             </a>
-                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/employee/update/{id} (id=${employee.id})}">
-                                <button type="button" class="btn btn-warning">Update</button>
+                            <a sec:authorize="hasRole('ROLE_ADMIN')"
+                               th:href="@{/employee/update/{id} (id=${employee.id})}"
+                               class="list-group-item list-group-item-action flex-fill vud-link">
+                                <button type="button" class="btn btn-warning vud-btn">Update</button>
                             </a>
                             <a sec:authorize="hasRole('ROLE_ADMIN')" th:if="${!employee.enabled}"
-                               th:href="@{/employee/deactivate/{id}?details=false (id=${employee.id})}">
-                                <button type="button" class="btn btn-success">Activate</button>
+                               th:href="@{/employee/deactivate/{id}?details=false (id=${employee.id})}"
+                               class="list-group-item list-group-item-action flex-fill vud-link">
+                                <button type="button" class="btn btn-success vud-btn">Activate</button>
                             </a>
                             <a sec:authorize="hasRole('ROLE_ADMIN')" th:if="${employee.enabled}"
-                               th:href="@{/employee/deactivate/{id}?details=false (id=${employee.id})}">
-                                <button type="button" class="btn btn-danger">Deactivate</button>
+                               th:href="@{/employee/deactivate/{id}?details=false (id=${employee.id})}"
+                               class="list-group-item list-group-item-action flex-fill vud-link">
+                                <button type="button" class="btn btn-danger vud-btn">Deactivate</button>
                             </a>
                         </div>
                     </div>
@@ -49,16 +57,8 @@
                 </li>
 
             </ul>
+            <br>
 
-            <ul >
-
-                <hr>
-                <th:block >
-                    <li></li>
-                    <hr>
-                </th:block>
-
-            </ul>
 
         </div>
     </div>

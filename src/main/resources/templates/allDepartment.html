@@ -17,10 +17,9 @@
             <p>Departments: </p>
         </div>
         <div class="col">
-            <a href="@{/department/add}">
-                <button>Add new Department!</button>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/department/add}">
+                <button class="btn btn-primary">Add new Department!</button>
             </a>
-            <button></button>
         </div>
         <div class="col ">
             <p class="numberOfDepartment"> ([[${numberOfDepartment}]] department)</p>
@@ -40,14 +39,14 @@
                 <tbody>
                 <tr th:each="department : ${departments}">
                     <td>[[${department.name}]]</td>
-                    <td>[[${numberOfDepartment}]]</td>
+                    <td>[[${department.employees.size()}]]</td>
 
                     <td>
 <!--                        <a th:href="@{'/details?id=' + ${room.id}}">View</a>-->
-                        <a th:href="@{department/details/{id} (id=${department.id})}">
+                        <a th:href="@{/department/details/{id} (id=${department.id})}">
                             <button type="button" class="btn btn-info">View</button>
                         </a>
-                        <a th:href="@{/department/update/{id} (id=${department.id})}">
+                        <a sec:authorize="hasRole('ADMIN')" th:href="@{/department/update/{id} (id=${department.id})}">
                             <button type="button" class="btn btn-warning">Update</button>
                         </a>
 

@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <input type="hidden" th:field="*{id}">
                     <label for="depName">Department Name</label>
-                    <input type="text" th;field="*{name}" class="form-control" id="depName">
+                    <input type="text" th:field="*{name}" class="form-control" id="depName">
                     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span> <br>
                 </div>
 

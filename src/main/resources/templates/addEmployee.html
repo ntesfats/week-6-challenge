@@ -17,17 +17,10 @@
             <h2>[[${submit}]] Employee: </h2>
 
             <form th:action="@{/employee/process}" th:object="${employee}" method="post">
-                <p>Full Name: [[${employee.fullName}]] </p>
-                <p> Email: [[${employee.email}]] </p>
-                <p> UserName: [[${employee.userName}]] </p>
-                <p> PassWord: [[${employee.password}]] </p>
-                <p> Department: [[${employee.department.name}]] </p>
-                <p> Job Title: [[${employee.}]] </p>
-
                 <div class="form-group">
                     <input type="hidden" th:field="*{id}">
                     <label for="depName">Full Name</label>
-                    <input type="text" class="form-control" id="depName">
+                    <input th:field="*{fullName}" type="text" class="form-control" id="depName">
                     <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span> <br>
                 </div>
                 <div class="form-group">
@@ -36,13 +29,13 @@
                     <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br>
                 </div>
                 <div class="form-group">
-                    <label for="UserName">UserName</label>
-                    <input th:field="*{userName}" type="text" class="form-control" id="UserName">
-                    <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></span> <br>
+                    <label for="UserName">Username</label>
+                    <input th:field="*{username}" type="text" class="form-control" id="UserName">
+                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span> <br>
 
                 </div>
                 <div class="form-group">
-                    <label for="password">PassWord</label>
+                    <label for="password">Password</label>
                     <input th:field="*{password}" type="password" class="form-control" id="password">
                     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span> <br>
                 </div>
@@ -60,11 +53,14 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="enabled">Enabled</label>
-                    <input th:field="*{enabled}" type="text" class="form-control" id="enabled">
+                    <label for="activate">Activate</label>
+                    <input th:field="*{enabled}" type="radio" class="form-control" value=true id="activate"> Activate
+                    <label for="deactivate">Deactivate</label>
+                    <input th:field="*{enabled}" type="radio" class="form-control" value=false id="deactivate">
                 </div>
 
                 <button type="submit" class="btn btn-primary">[[${submit}]] Employee</button>
+                <br><br>
             </form>
 
         </div>

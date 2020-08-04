@@ -4,7 +4,7 @@
     <div th:replace="base :: metaTags"></div>
 
     <div th:replace="base :: BootStrapAndMainCSSLinks"></div>
-    <title>Add Task</title>
+    <title>Department Details</title>
 </head>
 <body>
 
@@ -14,15 +14,21 @@
     <div class="row">
         <div class="col">
             <h2>Department Details:</h2>
-            <span th:if="${error}"> [[${error}]]</span>
+            <hr>
+            <span th:if="${error != null}"> [[${error}]]</span>
 
 
-            <div sec:authorize="hasRole('ROLE_ADMIN')" th:if="${department}">
-                <span > Department Name: [[${department.name}]] </span>
-                <a th:href="@{/department/update/{id} (id=${department.id})}">
+            <div th:if="${department != null}">
+                <span> Department Name: [[${department.name}]] </span>
+                <br>
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/department/update/{id} (id=${department.id})}">
                     <button type="button" class="btn btn-warning">Update</button>
                 </a>
             </div>
+
+
+
+
         </div>
     </div>
 </div>

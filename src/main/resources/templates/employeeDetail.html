@@ -20,17 +20,15 @@
             <th:block th:if="${employee}">
                 <p>Full Name: [[${employee.fullName}]] </p>
                 <p> Email: [[${employee.email}]] </p>
-                <p> UserName: [[${employee.userName}]] </p>
-                <p> PassWord: [[${employee.password}]] </p>
+                <p> UserName: [[${employee.username}]] </p>
                 <p> Department: [[${employee.department.name}]] </p>
-                <p> Job Title: [[${employee.jobTile}]] </p>
+                <p> Job Title: [[${employee.jobTitle}]] </p>
 
 
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
                     <a th:href="@{/employee/update/{id} (id=${employee.id})}">
                         <button type="button" class="btn btn-warning">Update</button>
                     </a>
-
                     <a th:if="${!employee.enabled}"
                        th:href="@{/employee/deactivate/{id}?details=true (id=${employee.id})}">
                         <button type="button" class="btn btn-success">Activate</button>
